@@ -1,3 +1,3 @@
-module.exports = {
-  port: '4444'
-}
+const defaultPort = '4444';
+
+export { defaultPort };
