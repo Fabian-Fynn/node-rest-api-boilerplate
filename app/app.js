@@ -3,13 +3,13 @@ import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import path from 'path';
-import config from './config/config';
+import { defaultPort } from './config/config';
 import mongoose from 'mongoose';
 import routes from './router';
 
 const app = express();
 const server = http.Server(app);
-const port = process.env.PORT || config.port;
+const port = process.env.PORT || defaultPort;
 const db = mongoose.connect('mongodb://localhost/default');
 
 app.use(bodyParser.urlencoded({ extended: false }));
