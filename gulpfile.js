@@ -6,13 +6,14 @@ var del = require("del");
 var path = require("path");
 var runSequence = require("run-sequence");
 var gulpLoadPlugins = require("gulp-load-plugins");
+var ava = require("gulp-ava");
 
 const plugins = gulpLoadPlugins();
 
 const paths = {
     js: ['app/**/*.js', '!dist/**', '!node_modules/**'],
     nonJs: ['./package.json', './.gitignore', './.env', './app/public/**/*'],
-    tests: './server/tests/*.js'
+    tests: './dist/app/tests/**/*.js'
 };
 
 gulp.task('clean', () =>
@@ -49,6 +50,18 @@ gulp.task('nodemon', ['copy', 'babel'], () =>
 );
 
 gulp.task('serve', ['clean'], () => runSequence('nodemon'));
+
+gulp.task('test', ['clean', 'babel'], () => {
+  gulp.src(paths.tests)
+    .pipe(plugins.ava({verbose: true}))
+    .on('error', function(err) {
+      console.log(err.message);
+      process.exit(1);
+    })
+    .on('end', function() {
+      console.log('completed');
+    });
+});
 
 gulp.task('default', ['clean'], () => {
   runSequence(
