@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+mongoose.models = {};
+mongoose.modelSchemas = {};
 
 const userSchema = new Schema({
   name: String
 });
 
-
 const User = mongoose.model('User', userSchema);
-export default User;
+module.exports = User;
