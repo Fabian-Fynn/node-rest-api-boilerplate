@@ -1,14 +1,18 @@
 var gulp = require("gulp");
-var sourcemaps = require("gulp-sourcemaps");
-var babel = require("gulp-babel");
-var concat = require("gulp-concat");
-var del = require("del");
 var path = require("path");
-var runSequence = require("run-sequence");
 var gulpLoadPlugins = require("gulp-load-plugins");
-var ava = require("gulp-ava");
 
-const plugins = gulpLoadPlugins();
+// Not all gulp plugins follow the convention of gulp-* names.
+// For example, it's 'del', not 'gulp-del'.
+const plugins = gulpLoadPlugins({
+  pattern: [
+    'gulp-*', 
+    'gulp.*', 
+    '@*/gulp{-,.}*', 
+    'del', 
+    'run-sequence',
+  ]
+});
 
 const paths = {
     js: ['app/**/*.js', '!dist/**', '!node_modules/**'],
@@ -17,7 +21,7 @@ const paths = {
 };
 
 gulp.task('clean', () =>
-  del.sync(['dist/**', 'dist/.*'])
+  plugins.del.sync(['dist/**', 'dist/.*'])
 );
 
 gulp.task('copy', () =>
@@ -49,7 +53,7 @@ gulp.task('nodemon', ['copy', 'babel'], () =>
   })
 );
 
-gulp.task('serve', ['clean'], () => runSequence('nodemon'));
+gulp.task('serve', ['clean'], () => plugins.runSequence('nodemon'));
 
 gulp.task('test', ['clean', 'babel'], () => {
   gulp.src(paths.tests)
@@ -64,7 +68,7 @@ gulp.task('test', ['clean', 'babel'], () => {
 });
 
 gulp.task('default', ['clean'], () => {
-  runSequence(
+  plugins.runSequence(
     ['babel', 'copy']
   );
 });
