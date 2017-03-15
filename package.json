@@ -27,6 +27,7 @@
   "dependencies": {
     "body-parser": "^1.17.0",
     "express-routes-mapper": "0.0.6",
+    "helmet": "^3.5.0",
     "mongoose": "^4.8.5"
   }
 }
