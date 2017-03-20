@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 import routes from './config/routes';
 import defaultPort from './config/config';
 
+mongoose.Promise = global.Promise;
+
 const app = express();
 app.use(helmet({
   dnsPrefetchControl: false,
