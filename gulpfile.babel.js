@@ -33,7 +33,7 @@ gulp.task('babel', () => {
 
 gulp.task('nodemon', gulp.series(gulp.parallel('copy', 'babel'), () => {
   return plugins.nodemon({
-    script: path.join('dist/app', 'app.js'),
+    script: path.join('dist/', 'app.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
     tasks: ['copy', 'babel']
@@ -51,5 +51,13 @@ gulp.task('test', gulp.series('clean', 'babel', () => {
     })
     .on('end', () => console.log('completed'));
 }));
+
+gulp.task('lint', function() {
+  return gulp.src('./app/**')
+  .pipe(plugins.eslint())
+  .pipe(plugins.eslint.format())
+  // Brick on failure to be super strict
+  .pipe(plugins.eslint.failOnError());
+});
 
 gulp.task('default', gulp.series('clean', 'babel', 'copy'));
