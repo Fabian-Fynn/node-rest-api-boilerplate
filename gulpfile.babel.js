@@ -6,13 +6,13 @@ const plugins = gulpLoadPlugins();
 const paths = {
   js: './app/**/*.js',
   nonJs: './app/**/*.!(js)',
-  tests: './app/tests/**/*.js'
+  tests: './app/tests/**/*.js',
 };
 
 gulp.task('clean', () => {
   return gulp.src('./dist', {
-        allowEmpty: true
-    })
+    allowEmpty: true,
+  })
     .pipe(plugins.clean());
 });
 
@@ -36,7 +36,7 @@ gulp.task('nodemon', gulp.series(gulp.parallel('copy', 'babel'), () => {
     script: path.join('dist/', 'app.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
-    tasks: ['copy', 'babel']
+    tasks: ['copy', 'babel'],
   });
 }));
 
@@ -52,12 +52,12 @@ gulp.task('test', gulp.series('clean', 'babel', () => {
     .on('end', () => console.log('completed'));
 }));
 
-gulp.task('lint', function() {
+gulp.task('lint', () => {
   return gulp.src('./app/**')
-  .pipe(plugins.eslint())
-  .pipe(plugins.eslint.format())
-  // Brick on failure to be super strict
-  .pipe(plugins.eslint.failOnError());
+    .pipe(plugins.eslint())
+    .pipe(plugins.eslint.format())
+    // Brick on failure to be super strict
+    .pipe(plugins.eslint.failOnError());
 });
 
 gulp.task('default', gulp.series('clean', 'babel', 'copy'));
