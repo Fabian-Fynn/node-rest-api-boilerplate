@@ -1,4 +1,5 @@
 import express from 'express';
+import helmet from 'helmet';
 import http from 'http';
 import bodyParser from 'body-parser';
 import path from 'path';
@@ -8,6 +9,11 @@ import routes from './config/routes';
 import mapRoutes from 'express-routes-mapper';
 
 const app = express();
+app.use(helmet({
+  dnsPrefetchControl: false,
+  frameguard: false,
+  ieNoOpen: false,
+}));
 const server = http.Server(app);
 const port = process.env.PORT || defaultPort;
 const db = mongoose.connect('mongodb://localhost/default');
