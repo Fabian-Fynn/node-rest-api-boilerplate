@@ -18,12 +18,13 @@ const UserController = () => {
   };
 
   const create = (req, res) => {
+    console.log(req);
     const u = new User({ name: req.body.name });
 
     u.save((err) => {
       if (err) console.log(err);
 
-      return res.json(u._id);
+      return res.status(200).json(u._id);
     });
   };
 
