@@ -46,7 +46,7 @@ gulp.task('test', gulp.series('clean', 'babel', () => {
   return gulp.src(paths.tests)
     .pipe(plugins.ava({ verbose: true }))
     .on('error', (err) => {
-      console.log(err.message);
+      console.error(err.message, err);
       process.exit(1);
     })
     .on('end', () => console.log('completed'));

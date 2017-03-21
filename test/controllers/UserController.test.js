@@ -19,8 +19,7 @@ test('Users are created correctly', (t) => {
     .set('Accept', /json/)
     .send({ name: 'Peter' })
     .end((err, res) => {
-      if (err) console.log(err);
-      console.log(res.res.text);
+      if (err) console.error(err);
     });
 });
 
@@ -28,7 +27,6 @@ test('Users are created correctly', (t) => {
   request(app)
     .get('/api/users')
     .end((err, res) => {
-      if (err) console.log(err);
-      console.log(res.res.text);
+      if (err) console.error(err);
     });
 });
