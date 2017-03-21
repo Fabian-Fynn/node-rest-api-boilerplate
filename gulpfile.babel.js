@@ -53,7 +53,7 @@ gulp.task('test', gulp.series('clean', 'babel', () => {
 }));
 
 gulp.task('lint', () => {
-  return gulp.src('./app/**')
+  return gulp.src(['./app/**', './test/**'])
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format())
     // Brick on failure to be super strict
