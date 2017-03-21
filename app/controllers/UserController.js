@@ -2,28 +2,25 @@ import User from './../models/UserModel';
 
 const UserController = () => {
   const getAll = (req, res) => {
-    User.find({}, 'name', (err, users) => {
-      if (err) console.error(err);
-
-      return res.json(users);
-    });
+    User.find({})
+    .then(users => res.status(200).json(users));
   };
 
   const get = (req, res) => {
-    User.findById(req.params.user_id, (err, user) => {
-      if (err) console.error(err);
-
-      return res.json(user);
-    });
+    User.findById(req.params.user_id)
+      .then(user => res.status(200).json(user));
   };
 
   const create = (req, res) => {
-    const u = new User({ name: req.body.name });
+    const user = new User({ name: req.body.name });
 
-    u.save((err) => {
-      if (err) console.error(err);
-
-      return res.status(200).json(u._id);
+    user.save().then((userSaved) => {
+      const id = {
+        _id: userSaved._id,
+      };
+      return res
+        .status(201)
+        .json(id);
     });
   };
 
