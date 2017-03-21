@@ -13,20 +13,36 @@ test.after(() => {
 });
 
 
-test('Users are created correctly', (t) => {
-  request(app)
+test('User is created', async (t) => {
+  let id;
+  await request(app)
     .post('/api/user')
     .set('Accept', /json/)
     .send({ name: 'Peter' })
-    .end((err, res) => {
-      if (err) console.error(err);
+    .expect(201)
+    .then((res) => {
+      t.truthy(res.body._id);
+      id = res.body._id;
+    });
+  // Retrieve user to check if it has been saved as specified
+  await request(app)
+    .get(`/api/user/${id}`)
+    .set('Accept', /json/)
+    .expect(200)
+    .then((res) => {
+      t.deepEqual(res.body, {
+        __v: 0,
+        _id: id,
+        name: 'Peter',
+      });
     });
 });
 
-test('Users are created correctly', (t) => {
-  request(app)
+test('Users are retrieved', async (t) => {
+  await request(app)
     .get('/api/users')
-    .end((err, res) => {
-      if (err) console.error(err);
+    .expect(200)
+    .then((res) => {
+      t.truthy(res.body.length);
     });
 });
