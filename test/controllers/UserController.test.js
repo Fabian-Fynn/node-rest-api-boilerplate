@@ -1,12 +1,34 @@
 import test from 'ava';
-import userController from './../../controllers/user_controller';
+import request from 'supertest';
+import { beforeAction, afterAction } from '../helpers/testSetup';
 
-//Current controllers don't allow tests
-//upcoming router will allow this
-test.beforeEach.skip(t => {
-  t.context.user = userController.create({ name: 'Peter' });
-})
+let app;
 
-test.skip('Users are created correctly', t => {
-  t.is(t.context.user.name, 'Peter');
+test.before(() => {
+  app = beforeAction();
+});
+
+test.after(() => {
+  afterAction();
+});
+
+
+test('Users are created correctly', (t) => {
+  request(app)
+    .post('/api/user')
+    .set('Accept', /json/)
+    .send({ name: 'Peter' })
+    .end((err, res) => {
+      if (err) console.log(err);
+      console.log(res.res.text);
+    });
+});
+
+test('Users are created correctly', (t) => {
+  request(app)
+    .get('/api/users')
+    .end((err, res) => {
+      if (err) console.log(err);
+      console.log(res.res.text);
+    });
 });
