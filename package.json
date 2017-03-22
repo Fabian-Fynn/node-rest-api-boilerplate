@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "pretest": "gulp lint",
     "test": "nyc ava"
   },
   "author": "Fabian Hoffmann",
