@@ -1,4 +1,4 @@
-module.exports = [
+const seeds = [
   {
     name: 'Tom',
   },
@@ -6,3 +6,5 @@ module.exports = [
     name: 'Tanja',
   },
 ];
+
+module.exports = seeds;
