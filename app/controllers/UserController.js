@@ -3,7 +3,7 @@ import User from './../models/UserModel';
 const UserController = () => {
   const getAll = (req, res) => {
     User.find({})
-    .then(users => res.status(200).json(users));
+      .then(users => res.status(200).json(users));
   };
 
   const get = (req, res) => {
@@ -18,9 +18,7 @@ const UserController = () => {
       const id = {
         _id: userSaved._id,
       };
-      return res
-        .status(201)
-        .json(id);
+      return res.status(201).json(id);
     });
   };
 
